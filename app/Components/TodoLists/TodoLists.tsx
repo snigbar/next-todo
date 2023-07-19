@@ -23,8 +23,8 @@ const [todo, setTodo] = useState<string>('')
   }
 
   return (
-    <section>
-      <form className='flex gap-6 items-center' onSubmit={handleSubmit}>
+    <section className='w-full md:w-4/5 lg:w-1/2'>
+      <form className='flex gap-6 items-center mx-auto md:w-2/3' onSubmit={handleSubmit}>
         <input type='text' placeholder='write down your task....' className='border border-gray-500 px-2 py-3 rounded-md w-full focus:scale-x-110 transition-transform duration-200 outline-none' onChange={handleChange} value={todo} required></input>
         <button type='submit' className='px-6 py-3 bg-rose-500 hover:bg-rose-600 rounded-md text-white active:translate-y-1 transition-transform duration-300'>Add</button>
       </form>

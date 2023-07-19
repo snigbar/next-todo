@@ -17,11 +17,11 @@ const TodoRow = ({data}: {data:ToDo}) => {
 
   return (
     <li key={data.id} className='flex justify-between w-full items-center gap-4'>
-           {!edit && <><div>
+           {!edit && <><div className='flex flex-col justify-center md:flex-row'>
           <input type='checkbox' name='check' id={data.id} checked={data.completed} onChange={()=> toggleCompleted(data.id)}></input>
           <label htmlFor={data.id} className='ms-2 text-xs'>Completed</label>
           </div>
-          <p className={data.completed?'text-indigo-600 flex items-center gap-1': ""}>
+          <p className={data.completed?'text-indigo-600 flex items-center gap-1 text-sm md:text-[1rem]': "text-sm md:text-[1rem]"}>
             
            {data.completed && <svg
             viewBox="0 0 1024 1024"
@@ -37,14 +37,14 @@ const TodoRow = ({data}: {data:ToDo}) => {
             
             </p>
             </>}
-          {data.completed ? <button className='px-2 py-1 text-center bg-red-600 text-white' onClick={() => handleDelete(data.id)}>Delete</button>:edit?
-          <form className='flex gap-2 items-center' onSubmit={handleEdit}>
+          {data.completed ? <button className='px-2 py-1 text-center text-xs md:text-sm bg-red-600 text-white' onClick={() => handleDelete(data.id)}>Delete</button>:edit?
+          <form className='flex gap-2 items-center justify-center mx-auto' onSubmit={handleEdit}>
           <input type='text' placeholder='edit' name='edit' className='border border-gray-500 px-2 py-1 rounded-md w-4/5 outline-none' required defaultValue={data.todo}></input>
-          <button type='submit' className='px-2 py-1 text-sm bg-rose-500 hover:bg-rose-600 rounded-md text-white active:translate-y-1 transition-transform duration-300'>submit</button>
+          <button type='submit' className='px-2 py-1 text-xs md:text-sm bg-rose-500 hover:bg-rose-600 rounded-md text-white active:translate-y-1 transition-transform duration-300'>submit</button>
           <a className='px-2 py-1 text-sm bg-slate-200 hover:bg-gray-300 cursor-pointer rounded-md active:translate-y-1 transition-transform duration-300' onClick={()=> setEdit(false)}>cancel</a>
         </form>
           :
-          <div className='text-sm'>
+          <div className='text-xs md:text-sm flex flex-col justify-center md:flex-row'>
           <button className='px-2 py-1 text-center bg-slate-200 hover:bg-gray-300' onClick={() => setEdit(true)}>Edit</button>
           <button className='px-2 py-1 text-center bg-rose-500 hover:bg-rose-600 text-white' onClick={() => handleDelete(data.id)}>Remove</button>
           </div>}
