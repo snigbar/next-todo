@@ -21,7 +21,7 @@ const [todo, setTodo] = useState<string>('')
     handleAddToDo(todo)
     setTodo('')
   }
- console.log(todos)
+
   return (
     <section>
       <form className='flex gap-6 items-center' onSubmit={handleSubmit}>
