@@ -1,4 +1,6 @@
-import Footer from "./Components/Footer";
+import Footer  from "./Components/Footer";
+import TodoLists from "./Components/TodoLists/TodoLists";
+
 
 
 export default function Home() {
@@ -13,6 +15,8 @@ export default function Home() {
      </p>
      </div>
 
+     {/* todo list */}
+    <TodoLists></TodoLists>
 
      {/* footer */}
      <Footer></Footer>
