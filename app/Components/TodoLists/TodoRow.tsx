@@ -6,7 +6,7 @@ import React, { useContext, useState } from 'react'
 
 const TodoRow = ({data}: {data:ToDo}) => {
     const [edit, setEdit] = useState(false)
-    const {toggleCompleted,addEdit} = useContext(CreateToDoContext) || {toggleCompleted: (id)=>{}, addEdit: ()=>{}}
+    const {toggleCompleted,addEdit, handleDelete} = useContext(CreateToDoContext) || {toggleCompleted: (id)=>{}, addEdit: ()=>{}, handleDelete: ()=>{}}
 
     const handleEdit =(e:React.FormEvent) => {
         e.preventDefault()
@@ -14,21 +14,40 @@ const TodoRow = ({data}: {data:ToDo}) => {
         setEdit(false)
     }
 
+
   return (
     <li key={data.id} className='flex justify-between w-full items-center gap-4'>
            {!edit && <><div>
           <input type='checkbox' name='check' id={data.id} checked={data.completed} onChange={()=> toggleCompleted(data.id)}></input>
-          <label htmlFor={data.id} className='ms-2'>Completed</label>
+          <label htmlFor={data.id} className='ms-2 text-xs'>Completed</label>
           </div>
-          <p>{data.todo}</p></>}
-          {data.completed ? <button className='px-2 py-1 text-center bg-red-600 text-white'>Delete</button>:edit?
+          <p className={data.completed?'text-indigo-600 flex items-center gap-1': ""}>
+            
+           {data.completed && <svg
+            viewBox="0 0 1024 1024"
+            fill="green"
+            height="1em"
+            width="1em"
+            display="inline-block"
+            >
+            <path d="M912 190h-69.9c-9.8 0-19.1 4.5-25.1 12.2L404.7 724.5 207 474a32 32 0 00-25.1-12.2H112c-6.7 0-10.4 7.7-6.3 12.9l273.9 347c12.8 16.2 37.4 16.2 50.3 0l488.4-618.9c4.1-5.1.4-12.8-6.3-12.8z" />
+            </svg>}
+
+            {data.todo}
+            
+            </p>
+            </>}
+          {data.completed ? <button className='px-2 py-1 text-center bg-red-600 text-white' onClick={() => handleDelete(data.id)}>Delete</button>:edit?
           <form className='flex gap-2 items-center' onSubmit={handleEdit}>
-          <input type='text' placeholder='edit' name='edit' className='border border-gray-500 px-2 py-1 rounded-md w-4/5 outline-none' required></input>
+          <input type='text' placeholder='edit' name='edit' className='border border-gray-500 px-2 py-1 rounded-md w-4/5 outline-none' required defaultValue={data.todo}></input>
           <button type='submit' className='px-2 py-1 text-sm bg-rose-500 hover:bg-rose-600 rounded-md text-white active:translate-y-1 transition-transform duration-300'>submit</button>
-          <a className='px-2 py-1 text-sm bg-indigo-500 hover:bg-indigo-600 rounded-md text-white active:translate-y-1 transition-transform duration-300' onClick={()=> setEdit(false)}>cancel</a>
+          <a className='px-2 py-1 text-sm bg-slate-200 hover:bg-gray-300 cursor-pointer rounded-md active:translate-y-1 transition-transform duration-300' onClick={()=> setEdit(false)}>cancel</a>
         </form>
           :
-          <button className='px-2 py-1 text-center bg-indigo-600 text-white' onClick={() => setEdit(true)}>Edit</button>}
+          <div className='text-sm'>
+          <button className='px-2 py-1 text-center bg-slate-200 hover:bg-gray-300' onClick={() => setEdit(true)}>Edit</button>
+          <button className='px-2 py-1 text-center bg-rose-500 hover:bg-rose-600 text-white' onClick={() => handleDelete(data.id)}>Remove</button>
+          </div>}
         </li>
   )
 }

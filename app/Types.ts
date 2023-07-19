@@ -10,4 +10,5 @@ export type TodoContextType = {
     handleAddToDo: (type:string) => void
     toggleCompleted: (type:string) => void
     addEdit: (data:string, id:string) => void
+    handleDelete: (id:string) => void
 }

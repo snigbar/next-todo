@@ -35,10 +35,14 @@ const ToDoProvider = ({children}: {children: ReactNode}) => {
         });
       };
 
+    const handleDelete = (id:string) => {
+        setTodos(prev => prev.filter((val) => val.id !== id));
+      };
+
 
     
   return (
-    <CreateToDoContext.Provider value={{todos, handleAddToDo, toggleCompleted, addEdit}}>
+    <CreateToDoContext.Provider value={{todos, handleAddToDo, toggleCompleted, addEdit,handleDelete}}>
         {children}
     </CreateToDoContext.Provider>
   )
