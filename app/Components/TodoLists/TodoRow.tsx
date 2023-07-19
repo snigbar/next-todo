@@ -1,17 +1,22 @@
+"use client"
 import { CreateToDoContext } from '@/app/Context/ToDoProvider'
 import { ToDo } from '@/app/Types'
-import React, { useContext, useState } from 'react'
+import React, { useContext, useRef, useState } from 'react'
 
 
 
 const TodoRow = ({data}: {data:ToDo}) => {
     const [edit, setEdit] = useState(false)
+    const edited = useRef<HTMLInputElement>(null)
     const {toggleCompleted,addEdit, handleDelete} = useContext(CreateToDoContext) || {toggleCompleted: (id)=>{}, addEdit: ()=>{}, handleDelete: ()=>{}}
 
     const handleEdit =(e:React.FormEvent) => {
         e.preventDefault()
-        addEdit(e.target?.edit?.value, data.id)
+        
+        if(edited.current){
+        addEdit(edited.current.value, data.id)
         setEdit(false)
+    }
     }
 
 
@@ -39,7 +44,7 @@ const TodoRow = ({data}: {data:ToDo}) => {
             </>}
           {data.completed ? <button className='px-2 py-1 text-center text-xs md:text-sm bg-red-600 text-white' onClick={() => handleDelete(data.id)}>Delete</button>:edit?
           <form className='flex gap-2 items-center justify-center mx-auto' onSubmit={handleEdit}>
-          <input type='text' placeholder='edit' name='edit' className='border border-gray-500 px-2 py-1 rounded-md w-4/5 outline-none' required defaultValue={data.todo}></input>
+          <input type='text' placeholder='edit' className='border border-gray-500 px-2 py-1 rounded-md w-4/5 outline-none' required defaultValue={data.todo} ref={edited}></input>
           <button type='submit' className='px-2 py-1 text-xs md:text-sm bg-rose-500 hover:bg-rose-600 rounded-md text-white active:translate-y-1 transition-transform duration-300'>submit</button>
           <a className='px-2 py-1 text-sm bg-slate-200 hover:bg-gray-300 cursor-pointer rounded-md active:translate-y-1 transition-transform duration-300' onClick={()=> setEdit(false)}>cancel</a>
         </form>
